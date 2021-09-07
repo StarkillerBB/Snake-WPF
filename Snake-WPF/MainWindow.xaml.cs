@@ -22,8 +22,13 @@ namespace Snake_WPF
     {
         //Snake body parts.
         const int SnakeSquareSize = 20;
+        const int SnakeStartLength = 3;
         private SolidColorBrush snakeBodyBrush = Brushes.Green;
         private SolidColorBrush snakeHeadBrush = Brushes.YellowGreen;
+
+        //Snake speed
+        const int SnakeStartSpeed = 400;
+        const int SnakeSpeedThreshold = 100;
 
         //Keeping track of how many parts the snake got.
         private List<SnakePart> snakeParts = new List<SnakePart>();
@@ -32,21 +37,30 @@ namespace Snake_WPF
         //Direction for the snake, defaulting to right.
         public enum SnakeDirection { Left, Right, Up, Down };
         private SnakeDirection snakeDirection = SnakeDirection.Right;
-        
+
+        private System.Windows.Threading.DispatcherTimer gameTickTimer = new System.Windows.Threading.DispatcherTimer();
 
         public MainWindow()
         {
             InitializeComponent();
+            gameTickTimer.Tick += GameTickTimer_Tick;
         }
 
         /// <summary>
-        /// Called when launching application.
+        /// Called when launching application. drawing the gameboard and starting a game.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             DrawGameArea();
+            StartNewGame();
+        }
+
+
+        private void GameTickTimer_Tick(object sender, EventArgs e)
+        {
+            MoveSnake();
         }
 
         /// <summary>
@@ -158,6 +172,23 @@ namespace Snake_WPF
             DrawSnake();
             // We'll get to this later...  
             //DoCollisionCheck();          
+        }
+
+        /// <summary>
+        /// Starting a new game with the default values.
+        /// </summary>
+        private void StartNewGame()
+        {
+            snakeLength = SnakeStartLength;
+            snakeDirection = SnakeDirection.Right;
+            snakeParts.Add(new SnakePart() { Position = new Point(SnakeSquareSize * 5, SnakeSquareSize * 5) });
+            gameTickTimer.Interval = TimeSpan.FromMilliseconds(SnakeStartSpeed);
+
+            // Draw the snake  
+            DrawSnake();
+
+            // Go!          
+            gameTickTimer.IsEnabled = true;
         }
     }
 
