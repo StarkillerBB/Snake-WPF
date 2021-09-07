@@ -23,6 +23,10 @@ namespace Snake_WPF
         //Snake body parts.
         const int SnakeSquareSize = 20;
 
+        private SolidColorBrush snakeBodyBrush = Brushes.Green;
+        private SolidColorBrush snakeHeadBrush = Brushes.YellowGreen;
+        private List<SnakePart> snakeParts = new List<SnakePart>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -74,5 +78,28 @@ namespace Snake_WPF
                     doneDrawingBackground = true;
             }
         }
+
+        /// <summary>
+        /// Drawing the snake on the board.
+        /// </summary>
+        private void DrawSnake()
+        {
+            foreach (SnakePart snakePart in snakeParts)
+            {
+                if (snakePart.UiElement == null)
+                {
+                    snakePart.UiElement = new Rectangle()
+                    {
+                        Width = SnakeSquareSize,
+                        Height = SnakeSquareSize,
+                        Fill = (snakePart.IsHead ? snakeHeadBrush : snakeBodyBrush)
+                    };
+                    GameArea.Children.Add(snakePart.UiElement);
+                    Canvas.SetTop(snakePart.UiElement, snakePart.Position.Y);
+                    Canvas.SetLeft(snakePart.UiElement, snakePart.Position.X);
+                }
+            }
+        }
     }
+
 }
