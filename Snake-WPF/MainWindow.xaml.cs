@@ -22,10 +22,17 @@ namespace Snake_WPF
     {
         //Snake body parts.
         const int SnakeSquareSize = 20;
-
         private SolidColorBrush snakeBodyBrush = Brushes.Green;
         private SolidColorBrush snakeHeadBrush = Brushes.YellowGreen;
+
+        //Keeping track of how many parts the snake got.
         private List<SnakePart> snakeParts = new List<SnakePart>();
+        private int snakeLength;
+
+        //Direction for the snake, defaulting to right.
+        public enum SnakeDirection { Left, Right, Up, Down };
+        private SnakeDirection snakeDirection = SnakeDirection.Right;
+        
 
         public MainWindow()
         {
@@ -99,6 +106,58 @@ namespace Snake_WPF
                     Canvas.SetLeft(snakePart.UiElement, snakePart.Position.X);
                 }
             }
+        }
+
+        /// <summary>
+        /// Moving the snake by removing the last part from the list, adding new part in front. Deciding new head. 
+        /// </summary>
+        private void MoveSnake()
+        {
+            // Remove the last part of the snake, in preparation of the new part added below  
+            while (snakeParts.Count >= snakeLength)
+            {
+                GameArea.Children.Remove(snakeParts[0].UiElement);
+                snakeParts.RemoveAt(0);
+            }
+            // Next up, we'll add a new element to the snake, which will be the (new) head  
+            // Therefore, we mark all existing parts as non-head (body) elements and then  
+            // we make sure that they use the body brush  
+            foreach (SnakePart snakePart in snakeParts)
+            {
+                (snakePart.UiElement as Rectangle).Fill = snakeBodyBrush;
+                snakePart.IsHead = false;
+            }
+
+            // Determine in which direction to expand the snake, based on the current direction  
+            SnakePart snakeHead = snakeParts[snakeParts.Count - 1];
+            double nextX = snakeHead.Position.X;
+            double nextY = snakeHead.Position.Y;
+            switch (snakeDirection)
+            {
+                case SnakeDirection.Left:
+                    nextX -= SnakeSquareSize;
+                    break;
+                case SnakeDirection.Right:
+                    nextX += SnakeSquareSize;
+                    break;
+                case SnakeDirection.Up:
+                    nextY -= SnakeSquareSize;
+                    break;
+                case SnakeDirection.Down:
+                    nextY += SnakeSquareSize;
+                    break;
+            }
+
+            // Now add the new head part to our list of snake parts...  
+            snakeParts.Add(new SnakePart()
+            {
+                Position = new Point(nextX, nextY),
+                IsHead = true
+            });
+            //... and then have it drawn!  
+            DrawSnake();
+            // We'll get to this later...  
+            //DoCollisionCheck();          
         }
     }
 
