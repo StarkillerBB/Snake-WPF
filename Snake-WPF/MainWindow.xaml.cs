@@ -67,7 +67,11 @@ namespace Snake_WPF
             StartNewGame();
         }
 
-
+        /// <summary>
+        /// With each time tick move the snake.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameTickTimer_Tick(object sender, EventArgs e)
         {
             MoveSnake();
@@ -344,7 +348,9 @@ namespace Snake_WPF
         /// </summary>
         private void UpdateGameStatus()
         {
-            Title = "SnakeWPF - Score: " + currentScore + " - Game speed: " + gameTickTimer.Interval.TotalMilliseconds;
+            
+            this.tbStatusScore.Text = currentScore.ToString();
+            this.tbStatusSpeed.Text = gameTickTimer.Interval.TotalMilliseconds.ToString();
         }
 
         /// <summary>
@@ -354,6 +360,25 @@ namespace Snake_WPF
         {
             gameTickTimer.IsEnabled = false;
             MessageBox.Show("Oooops, you died!\n\nTo start a new game, just press the Space bar...", "SnakeWPF");
+        }
+        /// <summary>
+        /// Move the window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        /// <summary>
+        /// Close the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 
