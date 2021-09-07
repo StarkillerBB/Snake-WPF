@@ -235,6 +235,49 @@ namespace Snake_WPF
             Canvas.SetTop(snakeFood, foodPosition.Y);
             Canvas.SetLeft(snakeFood, foodPosition.X);
         }
+
+        /// <summary>
+        /// Deciding snake movement out from key press.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            SnakeDirection originalSnakeDirection = snakeDirection;
+            switch (e.Key)
+            {
+                case Key.Up:
+                case Key.W:
+                case Key.NumPad8:
+                    if (snakeDirection != SnakeDirection.Down)
+                        snakeDirection = SnakeDirection.Up;
+                    break;
+                case Key.Down:
+                case Key.S:
+                case Key.NumPad2:
+                    if (snakeDirection != SnakeDirection.Up)
+                        snakeDirection = SnakeDirection.Down;
+                    break;
+                case Key.Left:
+                case Key.A:
+                case Key.NumPad4:
+                    if (snakeDirection != SnakeDirection.Right)
+                        snakeDirection = SnakeDirection.Left;
+                    break;
+                case Key.Right:
+                case Key.D:
+                case Key.NumPad6:
+                    if (snakeDirection != SnakeDirection.Left)
+                        snakeDirection = SnakeDirection.Right;
+                    break;
+                case Key.Space:
+                    StartNewGame();
+                    break;
+            }
+            //Only call method if they chose a new direction.
+            if (snakeDirection != originalSnakeDirection)
+                MoveSnake();
+        }
     }
 
 }
