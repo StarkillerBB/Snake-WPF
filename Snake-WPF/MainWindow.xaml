@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snake_WPF"
         mc:Ignorable="d"
+        x:Name="window" 
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         Title="SnakeWPF - Score: 0"
         SizeToContent="WidthAndHeight"
@@ -48,6 +49,7 @@
         </Grid>
         <Border BorderBrush="Black" BorderThickness="5">
             <Canvas Name="GameArea" ClipToBounds="True" Width="400" Height="400">
+                
                 <!-- Startup screen -->
                 <Border BorderBrush="Silver" BorderThickness="2" Width="300" Height="300" Canvas.Left="50" Canvas.Top="50" Name="bdrWelcomeMessage" Panel.ZIndex="1">
                     <StackPanel Orientation="Vertical" Background="AliceBlue">
@@ -57,10 +59,10 @@
                         <Button Margin="20" Name="btnShowHighscoreList" Click="BtnShowHighscoreList_Click" HorizontalAlignment="Center" Padding="10,3">Show High Score List...</Button>
                     </StackPanel>
                 </Border>
-                
+
                 <!-- Highscore list -->
                 <Border BorderBrush="Silver" BorderThickness="2" Width="300" Height="300" Canvas.Left="50" Canvas.Top="50" Name="bdrHighscoreList" Panel.ZIndex="1" Visibility="Collapsed">
-                    <StackPanel Orientation="Vertical" Background="AliceBlue">
+                    <StackPanel Background="AliceBlue">
                         <Border BorderThickness="0,0,0,2" BorderBrush="Silver" Margin="0,10">
                             <TextBlock HorizontalAlignment="Center" FontSize="34" FontWeight="Bold">High Score List</TextBlock>
                         </Border>
@@ -76,6 +78,7 @@
                         </ItemsControl>
                     </StackPanel>
                 </Border>
+                
                 <!-- Submit new highscore screen -->
                 <Border BorderBrush="Silver" BorderThickness="2" Width="300" Height="300" Canvas.Left="50" Canvas.Top="50" Name="bdrNewHighscore" Panel.ZIndex="1" Visibility="Collapsed">
                     <StackPanel Orientation="Vertical" Background="AliceBlue">
@@ -88,7 +91,7 @@
                     </StackPanel>
                 </Border>
 
-                <!-- End of game screen -->
+                <!-- Gameover -->
                 <Border BorderBrush="Silver" BorderThickness="2" Width="300" Height="300" Canvas.Left="50" Canvas.Top="50" Name="bdrEndOfGame" Panel.ZIndex="1" Visibility="Collapsed">
                     <StackPanel Orientation="Vertical" Background="AliceBlue">
                         <TextBlock HorizontalAlignment="Center" FontSize="40" FontWeight="Bold" Margin="0,20,0,0">Oh no!</TextBlock>
@@ -98,7 +101,6 @@
                         <TextBlock TextAlignment="Center" FontSize="16" Margin="20">Press SPACE to start a new game!</TextBlock>
                     </StackPanel>
                 </Border>
-
             </Canvas>
         </Border>
     </DockPanel>

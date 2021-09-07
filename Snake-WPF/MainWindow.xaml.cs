@@ -75,7 +75,7 @@ namespace Snake_WPF
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             DrawGameArea();
-            StartNewGame();
+            //StartNewGame();
         }
 
         /// <summary>
