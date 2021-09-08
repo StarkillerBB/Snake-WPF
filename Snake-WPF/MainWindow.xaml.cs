@@ -443,7 +443,7 @@ namespace Snake_WPF
         }
 
         /// <summary>
-        /// Save the highscore list to a file.
+        /// Save the highscore list to a file, if file exists overwrite it.
         /// </summary>
         private void SaveHighscoreList()
         {
